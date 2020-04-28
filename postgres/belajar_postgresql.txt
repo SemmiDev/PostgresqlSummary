@@ -1,0 +1,113 @@
+sudo systemctl enable postgresql
+sudo systemctl start postgresql
+service postgresql status
+
+login =>  psql -U postgres
+password =>  yourpassword
+
+\l = list database
+\c namadatabase = masuk ke salah saatu db
+DROP DATABASE namadatabase; = menghappus database
+CREATE DATABASE namadatabase; = membuat sebuah database
+
+membuat table : 
+	CREATE TABLE person(
+	id BIGSERIAL NOT NULL PRIMARY KEY,
+	first_name VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	email VARCHAR(50),
+	gender VARCHAR(50) NOT NULL,
+	date_of_birth DATE NOT NULL,
+	country_of_birth DATE NOT NULL,
+);
+
+melihat table : \d
+
+hapus table : DROP TABLE namatable;
+
+melihat isi konfigurasu tabel : \d namatable
+
+\dt = melihat relasi
+
+tambah data : INSERT INTO 
+person2(first_name,last_name,gender,date_of_birth,email)
+VALUES ('Sammi','Dev','Male',date '2001-10-10');
+
+keluarkan : SELECT * FROM namatable;
+spesifik : SELECT last_name FROM namatable;
+spesifik : SELECT first_name,gender  FROM namatable;
+
+MEMBUAT AUTO GENERATOR SQL = WEB Mockaroo
+pilih ukuran row, pilih nama table pilih format nya sql
+
+buat banyak : \i /home/sammidev/Videos/tutorial_amigoscode/person.sql
+ambil yg sudah di generate di mockaroo
+
+soring : asc atau desc
+	SELECT * FROM person ORDER BY country_of_birth; // default 		ascenfnig
+	SELECT * FROM person ORDER BY first_name;
+	SELECT * FROM person ORDER BY last_name;
+
+		SELECT * FROM person ORDER BY country_of_birth DESC; ini descanding 
+
+istimewa = SELECT DISTINCT country_of_birth FROM person ORDER BY country_of_birth;
+
+mencari spesifik = SELECT * FROM person WHERE country_of_birth = 'Indonesia';
+
+mencari spesifik = SELECT * FROM person WHERE country_of_birth = 'Indonesia' AND first_name = 'sam';
+
+mencari spesifik = SELECT * FROM person WHERE country_of_birth = 'Indonesia' AND (first_name = 'sam' OR last_name ='dev');
+
+
+operasi matematika : 
+SELECT 1 + 1;
+SELECT 1 - 2;
+SELECT 1 * 1;
+SELECT 1 / 1;
+SELECT 1 % 1;
+SELECT 1 <> 1; // ini membandingka apakah 1 sama dengan 1
+SELECT 'SAM' <> 'sam'; // ini membandingka apakah 1 sama dengan 1 // false
+SELECT 'SAM' = 'sam'; // ini membandingka apakah 1 sama dengan 1 // false
+
+mengeluarkan limit 10 = SELECT * FROM person LIMIT 10;
+ambil data 5 buah sesudah id 5 = SELECT * FROM person OFFSET 5 LIMIT 5;
+
+satu saja ambil = SELECT * FROM person OFFSET 5 FETCH FIRST 5 ROW ONLY;
+
+OR = SELECT * FROM person WHERE country_of_birth = 'Indonesia' 
+OR country_of_birth = 'Malaysia' OR country_of_birth = 'Singapore';
+
+
+nyari data = SELECT * FROM person WHERE email LIKE '%@bloomberg.com';
+nyari lagi dengan google.apasaja = SELECT * FROM person WHERE email LIKE '%@google.%';
+tanda unserscore digunakan untuk berapa buah karakter , contoh =  SELECT * FROM person WHERE email LIKE '_______@%';
+
+kalau ILIKE tidak akan memperhatika huruf kecil atau besarnya = SELECT * FROM person WHERE first_name ILIKE 'Ay%';
+muisa, menghitung banyak negara pemakai = SELECT country_of_birth, COUNT(*) FROM person GROUP BY country_of_birth;
+melihat sekaligus order = SELECT country_of_birth, COUNT(*) FROM person GROUP BY county_of_birth ORDER BY country_of_birth;
+lihat di bawah jumalh 5 misalnyya = SELECT country_of_birth, COUNT(*) FROM person GROUP BY country_of_birth HAVING COUNT(*) < 5  ORDER BY country_of_birth;
+bisa juga = SELECT country_of_birth, COUNT(*) FROM person GROUP BY country_of_birth HAVING COUNT(*) > 5 AND COUNT(*) < 10  ORDER BY country_of_birth; 
+
+ambil nilai tertinggi = SELECT MAX(price) FROM car;
+min = SELECT MIN(price) FROM car;
+rata = SELECT AVG(price) FROM car;
+round = SELECT ROUND(AVG(price)) FROM car;
+max  = SELECT make,model, MAX(price) FROM car GROUP BY make,model;
+min = SELECT make,model, MIN(price) FROM car GROUP BY make,model;
+jumlah = SELECT SUM(price) FROM car;
+model dan lihat total price = SELECT model, SUM(price) FROM car GROUP BY model;
+
+operator = SELECT 4 + 4;
+operator = SELECT 4 - 4;
+operator = SELECT 4 * 4;
+operator = SELECT 4!; // faktorial
+operator = SELECT 10 %5; // nol
+
+
+and others;
+misakan disocount 10 persen = Select id,make,price, price * .10 FROM car;
+misakan disocount 10 persen dan 2 angka pembulatan = Select id,make,price, ROUND(price * .10, 2) FROM car;
+
+persen dan lihat kurangnya = SELECT id, make, model,  price, ROUND(price * .10, 2), ROUND( price - (price * .10 ), 2)  FROM car;
+
+2 : 08 MINUTES
